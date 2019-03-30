@@ -1,0 +1,13 @@
+{
+    "skillNamespace": "danieltao-diviname",
+    "skillAppID": "REPLACE WITH dev appID",
+    "dynamoDBTableName": "danieltao-diviname-users-dev",
+    "s3": {
+        "bucketName": "danieltao-diviname-dev",
+        "transKey": "translations.json"
+    },
+    "region": "us-east-1",
+    "roleArn": "YOUR_ROLE_ARN",
+    "awsProfile": "danieltao-diviname-profile-dev",
+    "trackingToken": "REPLACE WITH ANALYTICS TRACKING TOKEN"
+}

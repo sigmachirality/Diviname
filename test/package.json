@@ -1,0 +1,17 @@
+{
+  "name": "danieltao-diviname-test",
+  "version": "1.0.0",
+  "description": "Test project for Diviname description here.",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {},
+  "dependencies": {},
+  "devDependencies": {
+    "aws-sdk": "^2.100.0",
+    "chai": "^3.5.0",
+    "clear-require": "^2.0.0",
+    "lambda-local": "^1.4.2",
+    "winston": "^2.3.1"
+  }
+}
