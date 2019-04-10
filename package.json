@@ -1,0 +1,29 @@
+{
+  "name": "diviname",
+  "version": "1.0.0",
+  "description": "An Alexa skill that divines the spiritual meaning of your name.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sigmachirality/Diviname.git"
+  },
+  "keywords": [
+    "Alexa",
+    "Name",
+    "Analysis"
+  ],
+  "author": "Daniel Tao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sigmachirality/Diviname/issues"
+  },
+  "homepage": "https://github.com/sigmachirality/Diviname#readme",
+  "dependencies": {
+    "ask-sdk": "^2.5.1",
+    "ask-sdk-core": "^2.5.1",
+    "ask-sdk-model": "^1.15.0"
+  }
+}
