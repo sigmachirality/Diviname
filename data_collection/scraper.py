@@ -4,11 +4,12 @@ import numpy as np
 from requests import get
 import os
 
+
 # Function that extracts sentences from a name analysis page on the Kabalarians website
 def get_sentences(url):
     page = get(url)
     soup = bs(page.text, 'html.parser')
-    return ([sentence.text.replace("Â", " ") for sentence in soup.select('#headerOL li')[1:]])
+    return ([sentence.text.replace("Â", " ") for sentence in soup.select('#headerOL ul li')[1:]])
 
 # Extract sentences from 3000 randomly selected names.
 name_website_root = "https://www.kabalarians.com/name-meanings/names"
@@ -20,7 +21,11 @@ for _, name in name_df.sample(n=3000).iterrows():
     sentences.update(set(get_sentences(path)))
 
 # Save scraped sentences as a csv.
-pd.Series(list(sentences)).to_csv("sentences.csv")
-
+pd.Series(list(sentences)).to_csv("sentences.csv", index=False)
+'''
+file = open("output.txt", 'w')
+series = pd.read_csv(os.path.join(os.getcwd(), 'sentences.csv'))
+file.write('", \n"'.join(series.NAME.apply(str)))
+'''
 
 
