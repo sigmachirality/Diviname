@@ -4,14 +4,20 @@ const LaunchRequestHandler = {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speechText = (
-            'Welcome to Diviname. ' +
-            'I can help you understand whether your first name is helping or hurting you.' +
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
+        let welcomeOutput = attributes.name != null ? (
+            'Welcome back to Diviname, ' + attributes.name +
+            'I can still help you understand whether your first name is helping or hurting you. ' + 
+            'Would you like to divine the meaning behind your name again?'
+        ) : (
+            'Welcome to Diviname. ' + 
+            'I can help you understand whether your first name is helping or hurting you. ' + 
             'Would you like to divine the meaning behind your name?'
         );
+        const welcomeReprompt = 'Would you like to analyze the meaning of your name?';
         return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(speechText)
+            .speak(welcomeOutput)
+            .reprompt(welcomeReprompt)
             .getResponse();
     }
 };
@@ -39,7 +45,12 @@ const CancelAndStopIntentHandler = {
                 || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speechText = 'Goodbye!';
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
+        let speechText = attributes.name != null ? (
+                'Goodbye, ' + attributes.name + "! Remember, your name can both help and hurt you!"
+            ) : (
+                'Goodbye! Remember, your name can both help and hurt you!'
+            );
         return handlerInput.responseBuilder
             .speak(speechText)
             .getResponse();
