@@ -15,12 +15,12 @@ name_df = pd.read_csv(os.path.join(os.getcwd(), 'name_gender.csv'))
 
 sentences = set()
 f = lambda gender: "/male/" if gender == "M" else "/female/"
-for _, name in name_df.iterrows():
+for _, name in name_df.sample(n=3000).iterrows():
     path = name_website_root + f(name["gender"]) + name["name"] + ".htm"
     print(path)
     set.update(set(get_sentences(path)))
 
-output = pd.Series(sentences)
+output = pd.Series(list(sentences))
 output.to_csv("sentences.csv")
 
 
