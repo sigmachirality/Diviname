@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from requests import get
 import os
+import file
 
 
 # Function that extracts sentences from a name analysis page on the Kabalarians website
@@ -21,6 +22,7 @@ for _, name in name_df.sample(n=3000).iterrows():
     sentences.update(set(get_sentences(path)))
 
 # Return output as text with syntax of Javascript array of strings
+file.open("output.txt", "w")
 series = pd.Series(list(sentences))
 series = [sentence.replace("\"", "\\\"") for sentence in series if isinstance(sentence, str)]
 file.write("\"" + '", \n"'.join(series) + "\"")
