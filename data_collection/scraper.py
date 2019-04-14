@@ -20,12 +20,9 @@ for _, name in name_df.sample(n=3000).iterrows():
     path = name_website_root + f(name["gender"]) + name["name"] + ".htm"
     sentences.update(set(get_sentences(path)))
 
-# Save scraped sentences as a csv.
-pd.Series(list(sentences)).to_csv("sentences.csv", index=False)
-'''
-file = open("output.txt", 'w')
-series = pd.read_csv(os.path.join(os.getcwd(), 'sentences.csv'))
-file.write('", \n"'.join(series.NAME.apply(str)))
-'''
+# Return output as text with syntax of Javascript array of strings
+series = pd.Series(list(sentences))
+series = [sentence.replace("\"", "\\\"") for sentence in series if isinstance(sentence, str)]
+file.write("\"" + '", \n"'.join(series) + "\"")
 
 
