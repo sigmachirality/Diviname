@@ -1,24 +1,38 @@
 // Handlers for default Intents, edited as appropriate.
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+        return handlerInput.requestEnvelope.request.type === 'LaunchRequest' ||
+            handlerInput.requestEnvelope.request.type === 'StartOverIntent';
     },
     handle(handlerInput) {
-        const attributes = handlerInput.attributesManager.getSessionAttributes();
-        let welcomeOutput = attributes.name != null ? (
-            'Welcome back to Diviname, ' + attributes.name +
-            'I can still help you understand whether your first name is helping or hurting you. ' + 
-            'Would you like to divine the meaning behind your name again?'
-        ) : (
-            'Welcome to Diviname. ' + 
-            'I can help you understand whether your first name is helping or hurting you. ' + 
-            'Would you like to divine the meaning behind your name?'
-        );
         const welcomeReprompt = 'Would you like to analyze the meaning of your name?';
-        return handlerInput.responseBuilder
-            .speak(welcomeOutput)
-            .reprompt(welcomeReprompt)
-            .getResponse();
+        var sessAttr = handlerInput.attributesManager.getSessionAttributes();
+        sessAttr.lastIntent = LaunchRequestHandler;
+        return new Promise((resolve, reject) => {
+            handlerInput.attributesManager.getPersistentAttributes()
+              .then((attributes) => {
+                let name = ""
+                if (typeof sessAttr.name != 'undefined') {
+                    name = sessAttr.name;
+                }
+                else if (typeof attributes.name !== 'undefined') {
+                  name = attributes.name;
+                  sessAttr.name = attributes.name;
+                }
+                handlerInput.attributesManager.setSessionAttributes(sessAttr);
+                let welcomeOutput = `Welcome back to Diviname ${name}. ` + 
+                    'I can still help you understand whether your first name is helping or hurting you. ' + 
+                    'Would you like to divine the meaning behind your name?';
+                resolve(handlerInput.responseBuilder
+                  .speak(welcomeOutput)
+                  .reprompt(welcomeReprompt)
+                  .getResponse());
+              })
+              .catch((error) => {
+                console.log(error);
+                reject(error);
+              });
+        });
     }
 };
 const HelpIntentHandler = {
@@ -62,8 +76,15 @@ const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
     },
-    handle(handlerInput) {
-        // Any cleanup logic goes here.
+    async handle(handlerInput) {
+        var attributes = handlerInput.attributesManager.getSessionAttributes();
+        if (attributes.name != null) {
+            let persistentAttr = {
+                name: attributes.name
+            }
+            handlerInput.attributesManager.setPersistentAttributes(persistentAttr);
+            await handlerInput.attributesManager.savePersistentAttributes();
+        }
         return handlerInput.responseBuilder.getResponse();
     }
 };

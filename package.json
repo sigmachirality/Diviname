@@ -24,6 +24,7 @@
   "dependencies": {
     "ask-sdk": "^2.5.1",
     "ask-sdk-core": "^2.5.1",
+    "ask-sdk-dynamodb-persistence-adapter": "^2.5.1",
     "ask-sdk-model": "^1.15.0",
     "csv-parser": "^2.2.0",
     "seedrandom": "^3.0.1"

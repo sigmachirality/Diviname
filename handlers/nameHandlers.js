@@ -39,7 +39,6 @@ const CompletedAnalyzeNameHandler = {
 }
 const RedirectHealthHandler = {
     canHandle(handlerInput) {
-        const attributes = handlerInput.attributesManager.getSessionAttributes();
         const request = handlerInput.requestEnvelope.request;
         return request.type === 'IntentRequest' && 
             request.intent.name === 'AnalyzeHealthIntent'
@@ -67,11 +66,8 @@ const AnalyzeHealthHandler = {
         let analysis = divination.getHealthMeaning(first, gender);
         let speechOutput = ('I\'ve analyzed your health, ' + first + 
             '. ' + analysis + 
-            ' Would you like to allow a different person to analyze their name, ' + 
+            ' What would you like to do now, ' + 
             first + "?");
-        let attributes = {};
-        attributes.name = first;
-        handlerInput.attributesManager.setSessionAttributes(attributes);
         return handlerInput.responseBuilder
             .speak(speechOutput)
             .getResponse();
