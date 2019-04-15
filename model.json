@@ -13,7 +13,9 @@
                 },
                 {
                     "name": "AMAZON.StopIntent",
-                    "samples": []
+                    "samples": [
+                        "exit"
+                    ]
                 },
                 {
                     "name": "AnalyzeNameIntent",
@@ -40,20 +42,36 @@
                         }
                     ],
                     "samples": [
-                        "{first}",
-                        "let's do it",
-                        "Tell me about {first}",
-                        "I am {first}",
-                        "My name is {first}",
-                        "Analyze the name {first}",
-                        "go ahead",
-                        "alright",
-                        "very well",
-                        "yes"
+                        "analyze my name",
+                        "analyze name",
+                        "divine a name",
+                        "divine my name",
+                        "get my name analysis",
+                        "name",
+                        "analyze a name"
                     ]
                 },
                 {
                     "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AnalyzeHealthIntent",
+                    "slots": [],
+                    "samples": [
+                        "tell me my health analysis",
+                        "tell me my health",
+                        "get my health",
+                        "health",
+                        "Analyze my health"
+                    ]
+                },
+                {
+                    "name": "AMAZON.RepeatIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StartOverIntent",
                     "samples": []
                 }
             ],
