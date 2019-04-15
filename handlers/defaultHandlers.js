@@ -1,38 +1,31 @@
+const nh = require('./nameHandlers');
 // Handlers for default Intents, edited as appropriate.
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'LaunchRequest' ||
             handlerInput.requestEnvelope.request.type === 'StartOverIntent';
     },
-    handle(handlerInput) {
-        const welcomeReprompt = 'Would you like to analyze the meaning of your name?';
+    async handle(handlerInput) {
+        const welcomeReprompt = 'Say "analyze a name" to analyze a name.';
         var sessAttr = handlerInput.attributesManager.getSessionAttributes();
-        var ret = new Promise((resolve, reject) => {
-            handlerInput.attributesManager.getPersistentAttributes()
-              .then((attributes) => {
-                let name = ""
-                if (typeof sessAttr.name != 'undefined') {
-                    name = sessAttr.name;
-                }
-                else if (typeof attributes.name !== 'undefined') {
-                  name = attributes.name;
-                  sessAttr.name = attributes.name;
-                }
-                handlerInput.attributesManager.setSessionAttributes(sessAttr);
-                let welcomeOutput = `Welcome back to Diviname ${name}. ` + 
-                    'I can still help you understand whether your first name is helping or hurting you. ' + 
-                    'Would you like to divine the meaning behind your name?';
-                resolve(handlerInput.responseBuilder
-                  .speak(welcomeOutput)
-                  .reprompt(welcomeReprompt)
-                  .getResponse());
-              })
-              .catch((error) => {
-                console.log(error);
-                reject(error);
-              });
-        });
+        var attributes = await handlerInput.attributesManager.getPersistentAttributes()
+        let name = ""
+        if (typeof sessAttr.name != 'undefined') {
+            name = sessAttr.name;
+        }
+        else if (typeof attributes.name !== 'undefined') {
+            name = attributes.name;
+            sessAttr.name = attributes.name;
+        }
+        let welcomeOutput = `Welcome to Diviname ${name}. ` + 
+            'I can help you understand whether your first name is helping or hurting you. ' + 
+            'Say "analyze a name" to analyze a name.';
+        var ret = handlerInput.responseBuilder
+            .speak(welcomeOutput)
+            .reprompt(welcomeReprompt)
+            .getResponse();
         sessAttr.repeat = ret;
+        sessAttr.last = "Launch";
         handlerInput.attributesManager.setSessionAttributes(sessAttr);
         return ret;
     }
@@ -47,13 +40,14 @@ const HelpIntentHandler = {
         const speechText = (
             (attributes.name != null ? attributes.name : "") +
             'I can analyze the spiritual meaning behind any name for a given gender. ' +
-            'Would you like me to analyze a name?'
+            'Say "analyze a name" to analyze a name.'
         );
         var ret = handlerInput.responseBuilder
             .speak(speechText)
             .reprompt(speechText)
             .getResponse();
         attributes.repeat = ret;
+        attributes.last = "Help";
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return ret;
     }
@@ -78,13 +72,13 @@ const CancelAndStopIntentHandler = {
 };
 const RepeatIntentHandler = {
     canHandle(handlerInput) {
-        return handlerInput.requestEnvelope.request.type === 'IntentRequest' && 
-        handlerInput.requestEnvelope.request.intent.name === 'AMAZON.RepeatIntent';
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+        && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.RepeatIntent';
     },
-    handler(handlerInput) {
+    handle(handlerInput) {
         var attributes = handlerInput.attributesManager.getSessionAttributes();
         if (attributes.repeat != null) {
-            return attributes.repeat
+            return attributes.repeat;
         } else {
             attributes.repeat = handlerInput.responseBuilder
                 .speak("Sorry, I don't remember anything to repeat. If you need more help, ask for it!")
@@ -121,7 +115,7 @@ const ErrorHandler = {
     handle(handlerInput, error) {
         console.log(`~~~~ Error handled: ${error.message}`);
         const speechText = "Sorry, I couldn't understand what you said." +
-        `Please contact the developer and relay the following message: ${error.message}`;
+        ` Please contact the developer and relay the following message: ${error.message} ${handlerInput.requestEnvelope.request.intent.name}`;
 
         return handlerInput.responseBuilder
             .speak(speechText)
