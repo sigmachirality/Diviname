@@ -7,6 +7,8 @@ exports.handler = Alexa.SkillBuilders.custom()
     dh.LaunchRequestHandler,
     nh.InProgressAnalyzeNameHandler,
     nh.CompletedAnalyzeNameHandler,
+    nh.AnalyzeHealthHandler,
+    nh.RedirectHealthHandler,
     dh.HelpIntentHandler,
     dh.CancelAndStopIntentHandler,
     dh.SessionEndedRequestHandler)

@@ -1297,15 +1297,12 @@ function getNameMeaning(name, gender) {
 
 function getHealthMeaning(name, gender) {
     var gen = seedrandom(name + gender);
-    var ret = '';
     var sentences = gender.toLowerCase() === "male" ? mhealth : fhealth;
-    for (var i = 0; i < 5; i++) {
-        ret = ret + " " + sentences[Math.floor(gen() * sentences.length)];
-        gen = seedrandom(gen());
-    }
+    var ret = sentences[Math.floor(gen() * sentences.length)];
     return ret;
 }
 
 module.exports = {
-    getNameMeaning: getNameMeaning
+    getNameMeaning: getNameMeaning,
+    getHealthMeaning: getHealthMeaning
 }
