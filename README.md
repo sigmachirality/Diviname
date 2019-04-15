@@ -1,4 +1,5 @@
-![Diviname](/logo.png)
+# Diviname
+![](/logo.png)
 ---
 
 ## Running This Skill
