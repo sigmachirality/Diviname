@@ -1,4 +1,4 @@
-const _ = require('seedrandom');
+var seedrandom = require('seedrandom');
 
 const sentences = [
 "Physical weaknesses resulting from the use of this name centre in the heart and respiratory organs, or in the fluid functions.", 
@@ -1094,13 +1094,14 @@ const sentences = [
 "This name does not offer the softness of expression for long-lasting compatibility in close associations.", 
 "As a result, you seem aloof."
 ];
-const size = 0;
+const size = sentences.length;
 
 function getNameMeaning(name, gender) {
-    Math.seedrandom(name + gender);
+    var gen = seedrandom(name + gender);
     var ret = '';
     for (var i = 0; i < 5; i++) {
-        ret = ret + " " + sentences[Math.random() * size];
+        ret = ret + " " + sentences[Math.floor(gen() * size)];
+        gen = seedrandom(gen());
     }
     return ret;
 }
