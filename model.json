@@ -1,0 +1,210 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "divine name",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AnalyzeNameIntent",
+                    "slots": [
+                        {
+                            "name": "first",
+                            "type": "AMAZON.US_FIRST_NAME",
+                            "samples": [
+                                "Analyze {first}",
+                                "The name is {first}",
+                                "I'm {first}",
+                                "{first}",
+                                "My name is {first}"
+                            ]
+                        },
+                        {
+                            "name": "gender",
+                            "type": "Gender",
+                            "samples": [
+                                "{gender}",
+                                "I am {gender}",
+                                "I am a {gender}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "{first}",
+                        "let's do it",
+                        "Tell me about {first}",
+                        "I am {first}",
+                        "My name is {first}",
+                        "Analyze the name {first}",
+                        "go ahead",
+                        "alright",
+                        "very well",
+                        "yes"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": [
+                {
+                    "name": "Gender",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Male",
+                                "synonyms": [
+                                    "Boy",
+                                    "Man"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Female",
+                                "synonyms": [
+                                    "Girl",
+                                    "Woman"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "AnalyzeNameIntent",
+                    "delegationStrategy": "ALWAYS",
+                    "confirmationRequired": true,
+                    "prompts": {
+                        "confirmation": "Confirm.Intent.155883263909"
+                    },
+                    "slots": [
+                        {
+                            "name": "first",
+                            "type": "AMAZON.US_FIRST_NAME",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.350039363248.1019004565390"
+                            }
+                        },
+                        {
+                            "name": "gender",
+                            "type": "Gender",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.350039363248.1322420229275"
+                            },
+                            "validations": [
+                                {
+                                    "type": "isInSet",
+                                    "prompt": "Slot.Validation.350039363248.1322420229275.235373405094",
+                                    "values": [
+                                        "Male",
+                                        "Female"
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Confirm.Intent.155883263909",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Just to confirm, you want me to analyze the {gender} name {first} . Is this correct?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.350039363248.1019004565390",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Tell me what name you'd like me to analyze."
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "What name would you like to analyze?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.350039363248.1322420229275.235373405094",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "I didn't recognize that gender. Tell me whether the name is male or female."
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.350039363248.1322420229275",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Tell me the gender of {first} ."
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Tell me the gender of the name."
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "What gender is {first} ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "What gender is the name?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.350039363248.1019004565390",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "I'm going to analyze the name {first} . Is this okay?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Are you sure you want me to analyze {first} ?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.Slot.350039363248.1322420229275",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Are you sure the name is {gender} ?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Are you sure the name {first} is {gender} ?"
+                    }
+                ]
+            }
+        ]
+    }
+}
