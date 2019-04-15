@@ -9,9 +9,13 @@ const InProgressAnalyzeNameHandler = {
     },
     handle(handlerInput) {
         const currentIntent = handlerInput.requestEnvelope.request.intent;
-        return handlerInput.responsebuilder
+        var ret = handlerInput.responsebuilder
             .addDelegateDirective(currentIntent)
             .getResponse();
+        var attributes = handlerInput.attributesManager.getSessionAttributes();
+        attributes.last = ret;
+        handlerInput.attributesManager.setSessionAttributes(attributes);
+        return ret;
     }
 };
 const CompletedAnalyzeNameHandler = {
@@ -32,9 +36,13 @@ const CompletedAnalyzeNameHandler = {
         attributes.name = first;
         attributes.gender = gender;
         handlerInput.attributesManager.setSessionAttributes(attributes);
-        return handlerInput.responseBuilder
+        var ret = handlerInput.responseBuilder
             .speak(speechOutput)
             .getResponse();
+        var attributes = handlerInput.attributesManager.getSessionAttributes();
+        attributes.last = ret;
+        handlerInput.attributesManager.setSessionAttributes(attributes);
+        return ret;
     }
 }
 const RedirectHealthHandler = {
@@ -45,9 +53,13 @@ const RedirectHealthHandler = {
     },
     handle(handlerInput) {
         let speechOutput = ("You should analyze your name before you analyze your health. What would you like to do?");
-        return handlerInput.responseBuilder
+        var ret = handlerInput.responseBuilder
             .speak(speechOutput)
             .getResponse();
+        var attributes = handlerInput.attributesManager.getSessionAttributes();
+        attributes.last = ret;
+        handlerInput.attributesManager.setSessionAttributes(attributes);
+        return ret;
     }
 } 
 const AnalyzeHealthHandler = {
@@ -68,9 +80,13 @@ const AnalyzeHealthHandler = {
             '. ' + analysis + 
             ' What would you like to do now, ' + 
             first + "?");
-        return handlerInput.responseBuilder
+        var ret = handlerInput.responseBuilder
             .speak(speechOutput)
             .getResponse();
+        var attributes = handlerInput.attributesManager.getSessionAttributes();
+        attributes.last = ret;
+        handlerInput.attributesManager.setSessionAttributes(attributes);
+        return ret;
     }
 } 
 // Module exports

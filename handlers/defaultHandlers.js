@@ -7,8 +7,7 @@ const LaunchRequestHandler = {
     handle(handlerInput) {
         const welcomeReprompt = 'Would you like to analyze the meaning of your name?';
         var sessAttr = handlerInput.attributesManager.getSessionAttributes();
-        sessAttr.lastIntent = LaunchRequestHandler;
-        return new Promise((resolve, reject) => {
+        var ret = new Promise((resolve, reject) => {
             handlerInput.attributesManager.getPersistentAttributes()
               .then((attributes) => {
                 let name = ""
@@ -33,6 +32,9 @@ const LaunchRequestHandler = {
                 reject(error);
               });
         });
+        sessAttr.last = ret;
+        handlerInput.attributesManager.setSessionAttributes(sessAttr);
+        return ret;
     }
 };
 const HelpIntentHandler = {
@@ -41,17 +43,19 @@ const HelpIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
-        const attributes = handlerInput.attributesManager.getSessionAttributes();
+        var attributes = handlerInput.attributesManager.getSessionAttributes();
         const speechText = (
             (attributes.name != null ? attributes.name : "") +
             'I can analyze the spiritual meaning behind any name for a given gender. ' +
             'Would you like me to analyze a name?'
         );
-
-        return handlerInput.responseBuilder
+        var ret = handlerInput.responseBuilder
             .speak(speechText)
             .reprompt(speechText)
             .getResponse();
+        attributes.last = ret;
+        handlerInput.attributesManager.setSessionAttributes(attributes);
+        return ret;
     }
 };
 const CancelAndStopIntentHandler = {
@@ -61,7 +65,7 @@ const CancelAndStopIntentHandler = {
                 || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const attributes = handlerInput.attributesManager.getSessionAttributes();
+        var attributes = handlerInput.attributesManager.getSessionAttributes();
         let speechText = attributes.name != null ? (
                 'Goodbye, ' + attributes.name + "! Remember, your name can both help and hurt you!"
             ) : (
@@ -98,7 +102,8 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         console.log(`~~~~ Error handled: ${error.message}`);
-        const speechText = `Sorry, I couldn't understand what you said. Please try again. Error: ${error.message}`;
+        const speechText = "Sorry, I couldn't understand what you said." +
+        `Please contact the developer and relay the following message: ${error.message}`;
 
         return handlerInput.responseBuilder
             .speak(speechText)
