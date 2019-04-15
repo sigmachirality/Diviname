@@ -77,7 +77,7 @@ const ErrorHandler = {
     },
     handle(handlerInput, error) {
         console.log(`~~~~ Error handled: ${error.message}`);
-        const speechText = `Sorry, I couldn't understand what you said. Please try again.`;
+        const speechText = `Sorry, I couldn't understand what you said. Please try again. Error: ${error.message}`;
 
         return handlerInput.responseBuilder
             .speak(speechText)

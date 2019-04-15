@@ -1,5 +1,4 @@
 var seedrandom = require('seedrandom');
-
 const msentences = [
     "A lack of  concentration makes it difficult to establish stable, secure conditions in your business life.",
     "Your desire for peace and harmony causes you to withdraw from situations where there is friction and acrimony.",
@@ -579,7 +578,8 @@ const msentences = [
     "However, you have to watch that others do not take advantage of your generosity, for you are apt to be influenced by hard-luck stories and give when it might be more prudent not to.",
     "You could be inventive along scientific or technical lines."
 ];
-const fsentences = ["You also have a tendency to worry.",
+const fsentences = [
+    "You also have a tendency to worry.",
     "You cannot stand pressure and desire to work where there is no confusion.",
     "You like to specialize in whatever you undertake.",
     "You want to assume responsibilities and to look after people; however, you can become too involved in other people's problems and tend to worry.",
@@ -1200,7 +1200,8 @@ const mhealth = [
     "Also, the intensity of your nature could result in tension in the solar plexus causing stomach trouble and, because you take your responsibilities seriously you could experience much worry.",
     "Any weakness in health would show in the respiratory system or generative organs."
 ];
-const fhealth = ["There is a weakness in the fluid functions and in the region  of the head resulting in sinus problems, headaches, eye, ear, or throat conditions and related ailments.  Hair loss could also be a problem.",
+const fhealth = [
+    "There is a weakness in the fluid functions and in the region  of the head resulting in sinus problems, headaches, eye, ear, or throat conditions and related ailments.  Hair loss could also be a problem.",
     "Health problems centre in the head affecting the eyes, ears, sinuses, or teeth.  Also, tension could afflict the female generative organs.",
     "You could suffer female disturbances or other problems in the generative organs.",
     "Your health could be affected by disorders affecting the intestinal tract.",
@@ -1288,7 +1289,7 @@ function getNameMeaning(name, gender) {
     var ret = '';
     var sentences = gender.toLowerCase() === "male" ? msentences : fsentences;
     for (var i = 0; i < 5; i++) {
-        ret = ret + " " + sentences[Math.floor(gen() * size)];
+        ret = ret + " " + sentences[Math.floor(gen() * sentences.length)];
         gen = seedrandom(gen());
     }
     return ret;
@@ -1299,7 +1300,7 @@ function getHealthMeaning(name, gender) {
     var ret = '';
     var sentences = gender.toLowerCase() === "male" ? mhealth : fhealth;
     for (var i = 0; i < 5; i++) {
-        ret = ret + " " + sentences[Math.floor(gen() * size)];
+        ret = ret + " " + sentences[Math.floor(gen() * sentences.length)];
         gen = seedrandom(gen());
     }
     return ret;
