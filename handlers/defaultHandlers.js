@@ -27,7 +27,9 @@ const HelpIntentHandler = {
             && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
     },
     handle(handlerInput) {
+        const attributes = handlerInput.attributesManager.getSessionAttributes();
         const speechText = (
+            attributes.name != null ? attributes.name : "" +
             'I can analyze the spiritual meaning behind any name for a given gender. ' +
             'Would you like me to analyze a name?'
         );
