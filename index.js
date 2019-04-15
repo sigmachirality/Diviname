@@ -10,11 +10,10 @@ const persistenceAdapter = new DynamoDbPersistenceAdapter({
 exports.handler = Alexa.SkillBuilders.custom()
   .addRequestHandlers(
     dh.LaunchRequestHandler,
-    nh.InProgressAnalyzeNameHandler,
+    dh.RepeatIntentHandler,
     nh.CompletedAnalyzeNameHandler,
     nh.AnalyzeHealthHandler,
     nh.RedirectHealthHandler,
-    dh.RepeatIntentHandler,
     dh.HelpIntentHandler,
     dh.CancelAndStopIntentHandler,
     dh.SessionEndedRequestHandler)
