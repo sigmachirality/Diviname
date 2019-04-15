@@ -32,7 +32,7 @@ const LaunchRequestHandler = {
                 reject(error);
               });
         });
-        sessAttr.last = ret;
+        sessAttr.repeat = ret;
         handlerInput.attributesManager.setSessionAttributes(sessAttr);
         return ret;
     }
@@ -53,7 +53,7 @@ const HelpIntentHandler = {
             .speak(speechText)
             .reprompt(speechText)
             .getResponse();
-        attributes.last = ret;
+        attributes.repeat = ret;
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return ret;
     }
@@ -76,6 +76,24 @@ const CancelAndStopIntentHandler = {
             .getResponse();
     }
 };
+const RepeatIntentHandler = {
+    canHandle(handlerInput) {
+        return handlerInput.requestEnvelope.request.type === 'IntentRequest' && 
+        handlerInput.requestEnvelope.request.intent.name === 'AMAZON.RepeatIntent';
+    },
+    handler(handlerInput) {
+        var attributes = handlerInput.attributesManager.getSessionAttributes();
+        if (attributes.repeat != null) {
+            return attributes.repeat
+        } else {
+            attributes.repeat = handlerInput.responseBuilder
+                .speak("Sorry, I don't remember anything to repeat. If you need more help, ask for it!")
+                .getResponse();
+            handlerInput.attributesManager.setSessionAttributes(attributes);
+            return attributes.repeat;
+        }
+    }
+}
 const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
         return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
@@ -116,6 +134,7 @@ module.exports = {
     LaunchRequestHandler : LaunchRequestHandler,
     HelpIntentHandler : HelpIntentHandler,
     CancelAndStopIntentHandler : CancelAndStopIntentHandler,
+    RepeatIntentHandler : RepeatIntentHandler,
     SessionEndedRequestHandler : SessionEndedRequestHandler,
     ErrorHandler : ErrorHandler
 }

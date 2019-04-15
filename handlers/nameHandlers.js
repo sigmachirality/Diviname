@@ -13,7 +13,7 @@ const InProgressAnalyzeNameHandler = {
             .addDelegateDirective(currentIntent)
             .getResponse();
         var attributes = handlerInput.attributesManager.getSessionAttributes();
-        attributes.last = ret;
+        attributes.repeat = ret;
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return ret;
     }
@@ -40,7 +40,7 @@ const CompletedAnalyzeNameHandler = {
             .speak(speechOutput)
             .getResponse();
         var attributes = handlerInput.attributesManager.getSessionAttributes();
-        attributes.last = ret;
+        attributes.repeat = ret;
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return ret;
     }
@@ -57,7 +57,7 @@ const RedirectHealthHandler = {
             .speak(speechOutput)
             .getResponse();
         var attributes = handlerInput.attributesManager.getSessionAttributes();
-        attributes.last = ret;
+        attributes.repeat = ret;
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return ret;
     }
@@ -84,7 +84,7 @@ const AnalyzeHealthHandler = {
             .speak(speechOutput)
             .getResponse();
         var attributes = handlerInput.attributesManager.getSessionAttributes();
-        attributes.last = ret;
+        attributes.repeat = ret;
         handlerInput.attributesManager.setSessionAttributes(attributes);
         return ret;
     }
