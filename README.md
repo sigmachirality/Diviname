@@ -32,4 +32,5 @@ Make sure your Lambda instance has DynamoDB permissions to create, read, and wri
 ---
 
 **Created by Daniel Tao**
+
 **Logo design credits to TotalityHacks - I just changed the hue to be more yellow :P**
