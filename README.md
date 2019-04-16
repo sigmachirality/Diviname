@@ -22,7 +22,13 @@ Make sure your Lambda instance has DynamoDB permissions to create, read, and wri
   - After prompting the user for his/her name and gender, return a name analysis
 - `Analyze my health`
   - Provided a name analysis has already been performed, return a health analysis
-  
+
+### Running The Scraper
+
+- Download the folder `data_collection`.
+- Install prereqs like numpy, pandas, bsoup4, etc
+- Run `./py scraper.py` in a terminal.
+
 ---
 
 **Created by Daniel Tao**
