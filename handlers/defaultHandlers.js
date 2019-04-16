@@ -1,4 +1,3 @@
-const nh = require('./nameHandlers');
 // Handlers for default Intents, edited as appropriate.
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -115,7 +114,7 @@ const ErrorHandler = {
     handle(handlerInput, error) {
         console.log(`~~~~ Error handled: ${error.message}`);
         const speechText = "Sorry, I couldn't understand what you said." +
-        ` Please contact the developer and relay the following message: ${error.message} ${handlerInput.requestEnvelope.request.intent.name}`;
+        ` Please contact the developer and relay the following message: ${error.message}`;
 
         return handlerInput.responseBuilder
             .speak(speechText)
